@@ -3,11 +3,6 @@ date = "2017-12-01T21:05:33+05:30"
 title = "About me"
 +++
 
-
-I'm the founder of <a href="https://noevate.org">Noevate</a>, the first enterprise introduction of the blockchain to real-world financial
-markets. Every market participant can dynamically create, trade, and robustly clear *any* financial contract &#8212; bespoke or standard "vanillas"
-&#8212; in any native currency.
-
 I studied economics, mathematics, &amp; physics in school and have been doing either financial or economic research as a practitioner ever
 since I left.
 
@@ -21,7 +16,7 @@ It's easier to say this in hindsight, but the aggresive questioning of this time
 After that, I worked at tastytrade &amp; tastyworks as a financial data scientist studying equity options &amp; futures. 
 This is where I was able to develop my first local volatility models. 
 These are the same models that eventually allowed me to focus solely on trading.
-Although I trade very differently today than I did then, what I learned from Tom Sosnoff was my first practical introduction 
+Although I trade very differently today than I did then, what I learned from Tom Sosnoff &amp; Pete Mulmat was my first practical introduction 
 to *real-world* trading &amp; *real-world* risk.
 
 I've been able to work on trading the yield curve and index options in very liquid products. Other than liquidity, I'm product
@@ -29,7 +24,7 @@ indifferent. Being able to trade this way has provided me a great deal of flexib
 
 ![This is a picture of me and Abby in France in 2017][1]
 
-<sup>Here's a pic of me &amp; Abby in France in 2017</sup>
+<sup>Here's me &amp; Abby in France in 2017</sup>
 
 I don't believe I would have ever found myself traveling and trading as an academic researcher. I've learned more from the real traders
 I've met in Chicago than I had from all of my professors before them. 
