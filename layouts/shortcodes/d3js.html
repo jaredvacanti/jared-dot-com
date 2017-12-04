@@ -1,0 +1,192 @@
+    <link rel=stylesheet type=text/css href="/viz/viz.css" />
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+
+<p>Compare </p>
+<p><select id="y0" onchange="updateData();">
+<option value="imitation">The Imitation Game</option>
+<option value="theory">The Theory of Everything</option>
+<option value="birdman" selected="selected">Birdman</option>
+<option value="boyhood">Boyhood</option><br />
+<option value="sniper">American Sniper</option>
+<option value="selma">Selma</option>
+<option value="whiplash">Whiplash</option>
+<option value="budapest">The Grand Budapest Hotel</option>
+</select> (solid line) with 
+<select id="y1" onchange="updateData();">
+<option value="imitation">The Imitation Game</option>
+<option value="theory">The Theory of Everything</option>
+<option value="birdman">Birdman</option>
+<option value="boyhood">Boyhood</option><br />
+<option value="sniper">American Sniper</option>
+<option value="selma" selected="selected">Selma</option>
+<option value="whiplash">Whiplash</option>
+<option value="budapest">The Grand Budapest Hotel</option>
+</select> (represented by a dashed line).</p>
+<div id="d3-body"></div>
+<script>
+var primary = $('#y0').val(),
+    secondary = $('#y1').val();
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 620 - margin.left - margin.right,
+    height = 320 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%m/%d/%Y %H:%M").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line1 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[primary]); });
+
+var line2 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[secondary]); });
+
+var area = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y1(function(d) { return y(d[primary]); });
+
+var svg = d3.select("#d3-body").append("svg")
+    .attr("width", "95%") //  width + margin.left + margin.right)
+    .attr("height",  "95%") // height + margin.top + margin.bottom)
+   .attr("preserveAspectRatio", "xMinYMin meet")
+   .attr("viewBox", "0 0 600 400")
+   //class to make it responsive
+   .classed("svg-content-responsive", true) 
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+ d3.csv("/viz/master.csv", function(error, data) {
+
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d[primary]= +d[primary];
+    d[secondary] = +d[secondary];
+    });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+
+  y.domain([
+    d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+    d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+    ]);
+
+  svg.datum(data);
+
+  svg.append("clipPath")
+      .attr("id", "clip-below")
+    .append("path")
+      .attr("d", area.y0(height));
+
+  svg.append("clipPath")
+      .attr("id", "clip-above")
+    .append("path")
+      .attr("d", area.y0(0));
+
+  svg.append("path")
+      .attr("class", "area above")
+      .attr("clip-path", "url(#clip-above)")
+      .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+
+  svg.append("path")
+      .attr("class", "area below")
+      .attr("clip-path", "url(#clip-below)")
+      .attr("d", area);
+
+  svg.append("path")
+      .attr("class", "line1")
+      .attr("d", line1)
+      .style("stroke", "#000");
+
+  svg.append("path")
+      .attr("class", "line2")
+      .attr("d", line2)
+      .attr('stroke-dasharray', "7,7")
+      .style("stroke", "#000");
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Number of Tweets");
+ });
+
+   function updateData() {
+    primary = $('#y0').val(),
+    secondary = $('#y1').val();
+
+  d3.csv("/viz/master.csv", function(error, data) {
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d[primary]= +d[primary];
+        d[secondary] = +d[secondary];
+              });
+
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+
+      y.domain([
+        d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+        d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+              ]);
+
+      var svg = d3.select("#d3-body").datum(data).transition();
+
+      svg.select(".line1")
+        .duration(750)
+        .attr("d", line1(data));
+
+      svg.select(".line2")
+        .duration(750)
+        .attr("d", line2(data));
+
+      svg.select("#clip-above path")
+        .duration(750)
+        .attr("d", area.y0(0));
+
+      svg.select("#clip-below path")
+        .duration(750)
+        .attr("d", area.y0(height));
+
+      svg.select(".area.above")
+        .duration(750)
+        .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+
+      svg.select(".area.below")
+        .duration(750)
+        .attr("d", area);
+
+      svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
+
+      });
+  }
+</script>
