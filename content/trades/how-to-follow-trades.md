@@ -13,7 +13,8 @@ showonlyimage = false
 Most of my research is around PCA methods on the yield curve or implied probability trading in markets with liquid options (which ... 
 due to liquidity has still been focused on the yield curve). I primarily do Eurodollar -- GE at CME -- spread trading.
 
-I'll only post up opening trades from now on, so hopefully after a few months it will be generally reflective of my portfolio. There's really
+I'll only post up opening trades from now on (not retroactively) 
+so hopefully after a few months it will be generally reflective of my portfolio. There's really
 no purpose to this site other than to keep myself honest and to improve the methods I use to place trades. 
 
 When earnings season start again the first few weeks of January 2018 I'll try to post implied probability graphs of major stocks before their calls. 
