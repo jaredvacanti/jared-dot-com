@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/volatility-models/</loc>
+    <lastmod>2016-11-05T19:57:40+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/international-fisher-effect/</loc>
+    <lastmod>2016-11-05T18:25:22+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/trades/how-to-follow-trades/</loc>
+    <lastmod>2015-02-06T19:53:42+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/bitcoin/</loc>
+    <lastmod>2017-12-01T19:41:01+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/crude-oil-calendars/</loc>
+    <lastmod>2016-05-03T19:44:32+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/d3js-development-environment/</loc>
+    <lastmod>2015-05-05T19:50:47+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/oscar-sentiments-with-twitter/</loc>
+    <lastmod>2015-02-06T19:53:42+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/low-vol-trading/</loc>
+    <lastmod>2016-11-05T19:56:17+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/about/</loc>
+    <lastmod>2017-12-01T21:05:33+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/contact/</loc>
+    <lastmod>2016-12-01T13:00:25+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/</loc>
+    <lastmod>2016-11-05T19:57:40+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/</loc>
+    <lastmod>2016-11-05T19:57:40+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/trades/</loc>
+    <lastmod>2015-02-06T19:53:42+05:30</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

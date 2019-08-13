@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta content="Oscar Analysis with Twitter Data" property="og:title">
+<meta content="http://jaredvacanti.com/viz/twitter-oscars/thumb1.png" property="og:image">
+<meta content="A interactive visualization of twitter data during last Sunday's Oscars" property="og:description">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-50805903-1', 'jaredvacanti.com');
+  ga('send', 'pageview');
+
+</script>
+
+<style>
+
+body {
+  font: 10px sans-serif;
+    margin-left:auto;
+  margin-right:auto;
+  width:80%;
+  padding-bottom:55px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.area.above {
+  fill: rgb(252,141,89);
+}
+
+.area.below {
+  fill: rgb(145,207,96);
+}
+#test-data {
+    display:none;
+}
+.line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2.5px;
+}
+p {
+  font-size: 15px;
+}
+.legend {
+    padding-left:40px;
+  padding-top:20px;
+}
+
+.border {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+h1 {
+  font-size: 30px;
+}
+
+</style>
+
+<body>
+  <h1>Analyzing Oscar Sentiments with Twitter Data</h1>
+  <p>The Oscars were on Sunday, and I wanted to see what people thought about the winners 
+    (and more interesting) the losers. I hooked up to the 
+    <a href="https://dev.twitter.com/streaming/firehose">Twitter Firehose<a> and filtered for any of 
+      the nominees (Best Picture, Actor, Actress). I stored the tweets in a MongoDB instance and used
+      the aggregation framework and map-reduce jobs to do text analysis on the tweets (in the 45 minutes
+      displayed below there were around 160,000 tweets, but for the night there were around 1.2m that 
+      I was able to collect.<p>
+      <p>If your first selection was being talked about more than the movie you're comparing it to, the gap will
+        be green, if there's less buzz about it it'll be filled in red. Only 1600 tweets a minute might seem
+        small, but they're filtered and analyzed with <a href="http://nltk.org">NLTK</a> to only display the tweets that are surely referring
+        to a particular movie.</p>
+<div class='border'> <p class="legend">Compare 
+
+  <select id='y0' onchange="updateData();">
+  <option value="imitation">The Imitation Game</option>
+  <option value="theory">The Theory of Everything</option>
+  <option value="birdman" selected="selected">Birdman</option>
+  <option value="boyhood">Boyhood</option>  
+  <option value="sniper">American Sniper</option>
+  <option value="selma">Selma</option>
+  <option value="whiplash">Whiplash</option>
+  <option value="budapest">The Grand Budapest Hotel</option>
+</select> (solid line) with 
+<select id='y1' onchange="updateData();">
+  <option value="imitation">The Imitation Game</option>
+  <option value="theory">The Theory of Everything</option>
+  <option value="birdman">Birdman</option>
+  <option value="boyhood">Boyhood</option>  
+  <option value="sniper">American Sniper</option>
+  <option value="selma" selected="selected">Selma</option>
+  <option value="whiplash">Whiplash</option>
+  <option value="budapest">The Grand Budapest Hotel</option>
+</select> (represented by a dashed line).
+
+</p>
+<div id="d3-body"></div>
+</div>
+
+  <p>There are the typical spikes-- around 11:04 PM CST the Best Picture was announced. That's when you
+    see Birdman take a huge jump, and similarly the movies people wanted to would win 
+    (American Sniper &amp; Boyhood). I wanted Theory of Everything to win, and when Eddie Redmayne won for
+    Best Actor there was a large spike (around 10:50 PM).</p>
+    <p>You're more than welcome to reproduce the data used here (the csv file is located at this directory titled master.csv) or link to the visualization via iframe with jaredvacanti.com/viz/wp-twitter-oscars. 
+      I'll update this page with a few more details over time- there should be a log scale available because
+      Birdman constantly has more tweets than anyone going in the big favorite.</p>
+      <p><a href="http://jaredvacanti.com">Back Home</a></p>
+<script>
+var primary = $('#y0').val(),
+    secondary = $('#y1').val();
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%m/%d/%Y %H:%M").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line1 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[primary]); });
+
+var line2 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[secondary]); });
+
+var area = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y1(function(d) { return y(d[primary]); });
+
+var svg = d3.select("#d3-body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+ d3.csv("master.csv", function(error, data) {
+
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d[primary]= +d[primary];
+    d[secondary] = +d[secondary];
+    });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+
+  y.domain([
+    d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+    d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+    ]);
+
+  svg.datum(data);
+
+  svg.append("clipPath")
+      .attr("id", "clip-below")
+    .append("path")
+      .attr("d", area.y0(height));
+
+  svg.append("clipPath")
+      .attr("id", "clip-above")
+    .append("path")
+      .attr("d", area.y0(0));
+
+  svg.append("path")
+      .attr("class", "area above")
+      .attr("clip-path", "url(#clip-above)")
+      .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+
+  svg.append("path")
+      .attr("class", "area below")
+      .attr("clip-path", "url(#clip-below)")
+      .attr("d", area);
+
+  svg.append("path")
+      .attr("class", "line1")
+      .attr("d", line1)
+      .style("stroke", "#000");
+
+  svg.append("path")
+      .attr("class", "line2")
+      .attr("d", line2)
+      .attr('stroke-dasharray', "7,7")
+      .style("stroke", "#000");
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Number of Tweets");
+ });
+    
+   function updateData() {
+    primary = $('#y0').val(),
+    secondary = $('#y1').val();
+    
+  d3.csv("master.csv", function(error, data) {
+        
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d[primary]= +d[primary];
+        d[secondary] = +d[secondary];
+              });
+
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+
+      y.domain([
+        d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+        d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+              ]);
+
+      var svg = d3.select("#d3-body").datum(data).transition();
+      
+      svg.select(".line1")
+        .duration(750)
+        .attr("d", line1(data));
+      
+      svg.select(".line2")
+        .duration(750)
+        .attr("d", line2(data));
+      
+      svg.select("#clip-above path")
+        .duration(750)
+        .attr("d", area.y0(0));
+        
+      svg.select("#clip-below path")
+        .duration(750)
+        .attr("d", area.y0(height));
+        
+      svg.select(".area.above")
+        .duration(750)
+        .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+    
+      svg.select(".area.below")
+        .duration(750)
+        .attr("d", area);
+        
+      svg.select(".y.axis") // change the y axis
+        .duration(750)
+        .call(yAxis);
+
+      });
+  }
+</script>

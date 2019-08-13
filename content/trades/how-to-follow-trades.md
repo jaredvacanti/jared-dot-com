@@ -17,6 +17,6 @@ I'll only post up opening trades from now on (not retroactively)
 so hopefully after a few months it will be generally reflective of my portfolio. There's really
 no purpose to this site other than to keep myself honest and to improve the methods I use to place trades. 
 
-When earnings season start again the first few weeks of January 2018 I'll try to post implied probability graphs of major stocks before their calls. 
+When earnings season start again I'll try to post implied probability graphs of major stocks before their calls. 
 Although I don't typically trade on earnings announcements, most of my research is currently based around extracting implied probability curves, 
 and these curves are very pronounced before earnings announcements.

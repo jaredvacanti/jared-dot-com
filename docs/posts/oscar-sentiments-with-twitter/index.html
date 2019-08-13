@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Visualizing Oscar Sentiments with Twitter Data</title>
+<meta name="description" content="the online homepage of Jared Vacanti">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="https://jaredvacanti.com/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="https://jaredvacanti.com/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://jaredvacanti.com/css/owl.carousel.css">
+<link rel="stylesheet" href="https://jaredvacanti.com/css/owl.theme.css">
+
+
+  <link href="https://jaredvacanti.com/css/style.blue.css" rel="stylesheet" id="theme-stylesheet">
+
+ 
+
+  
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+
+<link href="https://jaredvacanti.com/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="https://jaredvacanti.com/img/favicon.png" type="image/x-icon">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-50805903-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    
+    <h1 class="sidebar-heading"><a href="https://jaredvacanti.com/">Jared Vacanti</a></h1>
+
+      <p class="sidebar-p">I'm a financial data scientist, originally from Nebraska, currently in Chicago, IL.</p>
+
+      <p class="sidebar-p">I do most of my work in Python and C/C++. I try to post some of my trades, my research, and some of the projects
+      I'm working on here on my site.</p>
+
+    
+    <ul class="sidebar-menu">
+        <li><a href="/about/">About</a></li>
+        <li><a href="https://code.jaredvacanti.com/explore/projects">Code</a></li>
+        <li><a href="/trades/">Recent Trades</a></li>
+        <li><a href="/contact/">Get in Touch</a></li>
+    </ul>
+
+    <p class="social">
+  
+  
+  
+  <a href="https://twitter.com/jaredvacanti" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  
+  <a href="mailto:jared@jaredvacanti.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  
+  <a href="https://stackexchange.com/users/1694559/jared" data-animate-hover="pulse">
+    <i class="fa fa-stack-overflow"></i>
+  </a>
+  
+  
+  <a href="https://github.com/jaredvacanti" data-animate-hover="pulse">
+    <i class="fa fa-github"></i>
+  </a>
+  
+</p>
+
+
+
+  </div>
+</div>
+ 
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="https://jaredvacanti.com/">Jared Vacanti</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>Visualizing Oscar Sentiments with Twitter Data</h1>
+         <p>Even though it&rsquo;s already Thursday, sometimes these things are better late than never (4 days is too long&ndash; I&rsquo;m already focused on Oscars 2016). I crunched some data on the Oscars to see what people thought about the winners and how they reacted to the losers.</p>
+
+<p>A few things we can take from this: it looks like people really wanted &ldquo;American Sniper&rdquo; to win. There was a huge spike right at the announcement for Best Picture (around 11 PM CST- but the Oscars ran a little late).  The Theory of Everything noticed some action around the same time that Eddie Redmayne won the award for Best Actor. Selma noticed a spike leading up to the announcement, but dropped off as soon as the announcement happened &ndash; a lot of &ldquo;I hope Selma wins :)&ldquo;, etc.</p>
+
+<p>Methodology: I used an Azure virtual machine to stream the Twitter Firehose during the Oscars. My local machine kept timing out because of the bandwidth and processing speed of the stream. I found that at the A4 8-core level I didn&rsquo;t have any problems. I filtered the stream for tweets containing any of the nominees (people or films, this post is only for the best picture nominations). I used MongoDB to store them and filtered the tweets with text processing (NLTK). I did make a mistake and closed my connection out for a while until the data starts on this page (just about 20 minutes before the announcement of Best Picture), but I noticed it in time to get it started up again for the 11PM announcement.</p>
+
+    <link rel=stylesheet type=text/css href="/viz/viz.css" />
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+
+<p>Compare </p>
+<p><select id="y0" onchange="updateData();">
+<option value="imitation">The Imitation Game</option>
+<option value="theory">The Theory of Everything</option>
+<option value="birdman" selected="selected">Birdman</option>
+<option value="boyhood">Boyhood</option><br />
+<option value="sniper">American Sniper</option>
+<option value="selma">Selma</option>
+<option value="whiplash">Whiplash</option>
+<option value="budapest">The Grand Budapest Hotel</option>
+</select> (solid line) with 
+<select id="y1" onchange="updateData();">
+<option value="imitation">The Imitation Game</option>
+<option value="theory">The Theory of Everything</option>
+<option value="birdman">Birdman</option>
+<option value="boyhood">Boyhood</option><br />
+<option value="sniper">American Sniper</option>
+<option value="selma" selected="selected">Selma</option>
+<option value="whiplash">Whiplash</option>
+<option value="budapest">The Grand Budapest Hotel</option>
+</select> (represented by a dashed line).</p>
+<div id="d3-body"></div>
+<script>
+var primary = $('#y0').val(),
+    secondary = $('#y1').val();
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 620 - margin.left - margin.right,
+    height = 320 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%m/%d/%Y %H:%M").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line1 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[primary]); });
+
+var line2 = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d[secondary]); });
+
+var area = d3.svg.area()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y1(function(d) { return y(d[primary]); });
+
+var svg = d3.select("#d3-body").append("svg")
+    .attr("width", "95%") 
+    .attr("height",  "95%") 
+   .attr("preserveAspectRatio", "xMinYMin meet")
+   .attr("viewBox", "0 0 600 400")
+   
+   .classed("svg-content-responsive", true) 
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+ d3.csv("/viz/master.csv", function(error, data) {
+
+  data.forEach(function(d) {
+    d.date = parseDate(d.date);
+    d[primary]= +d[primary];
+    d[secondary] = +d[secondary];
+    });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+
+  y.domain([
+    d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+    d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+    ]);
+
+  svg.datum(data);
+
+  svg.append("clipPath")
+      .attr("id", "clip-below")
+    .append("path")
+      .attr("d", area.y0(height));
+
+  svg.append("clipPath")
+      .attr("id", "clip-above")
+    .append("path")
+      .attr("d", area.y0(0));
+
+  svg.append("path")
+      .attr("class", "area above")
+      .attr("clip-path", "url(#clip-above)")
+      .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+
+  svg.append("path")
+      .attr("class", "area below")
+      .attr("clip-path", "url(#clip-below)")
+      .attr("d", area);
+
+  svg.append("path")
+      .attr("class", "line1")
+      .attr("d", line1)
+      .style("stroke", "#000");
+
+  svg.append("path")
+      .attr("class", "line2")
+      .attr("d", line2)
+      .attr('stroke-dasharray', "7,7")
+      .style("stroke", "#000");
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Number of Tweets");
+ });
+
+   function updateData() {
+    primary = $('#y0').val(),
+    secondary = $('#y1').val();
+
+  d3.csv("/viz/master.csv", function(error, data) {
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d[primary]= +d[primary];
+        d[secondary] = +d[secondary];
+              });
+
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+
+      y.domain([
+        d3.min(data, function(d) { return Math.min(d[primary], d[secondary]); }),
+        d3.max(data, function(d) { return Math.max(d[primary], d[secondary]); })
+              ]);
+
+      var svg = d3.select("#d3-body").datum(data).transition();
+
+      svg.select(".line1")
+        .duration(750)
+        .attr("d", line1(data));
+
+      svg.select(".line2")
+        .duration(750)
+        .attr("d", line2(data));
+
+      svg.select("#clip-above path")
+        .duration(750)
+        .attr("d", area.y0(0));
+
+      svg.select("#clip-below path")
+        .duration(750)
+        .attr("d", area.y0(height));
+
+      svg.select(".area.above")
+        .duration(750)
+        .attr("d", area.y0(function(d) { return y(d[secondary]); }));
+
+      svg.select(".area.below")
+        .duration(750)
+        .attr("d", area);
+
+      svg.select(".y.axis") 
+        .duration(750)
+        .call(yAxis);
+
+      });
+  }
+</script>
+
+<p>The visualization is done in D3.js, the best way to interact with data, and it&rsquo;s stored in a .csv file. I&rsquo;m not completely sure about the twitter rates, but I collected ~150k tweets in 45 minutes. Twitter logs told me that I missed out on ~10k tweets, so there were roughly 160,000 tweets. It&rsquo;s a big number, but that seems low. I&rsquo;ll try to refine the process more in the future.</p>
+         <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "jaredvacanti" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="https://jaredvacanti.com/js/jquery.min.js"></script>
+<script src="https://jaredvacanti.com/js/bootstrap.min.js"></script>
+<script src="https://jaredvacanti.com/js/jquery.cookie.js"> </script>
+<script src="https://jaredvacanti.com/js/ekko-lightbox.js"></script>
+<script src="https://jaredvacanti.com/js/jquery.scrollTo.min.js"></script>
+<script src="https://jaredvacanti.com/js/masonry.pkgd.min.js"></script>
+<script src="https://jaredvacanti.com/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://jaredvacanti.com/js/owl.carousel.min.js"></script>
+<script src="https://jaredvacanti.com/js/front.js"></script>
+
+</body>
+</html>

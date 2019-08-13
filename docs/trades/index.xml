@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Trades on Jared Vacanti&#39;s Homepage</title>
+    <link>https://jaredvacanti.com/trades/</link>
+    <description>Recent content in Trades on Jared Vacanti&#39;s Homepage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 06 Feb 2015 19:53:42 +0530</lastBuildDate>
+    
+	<atom:link href="https://jaredvacanti.com/trades/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>How to Follow These Trades</title>
+      <link>https://jaredvacanti.com/trades/how-to-follow-trades/</link>
+      <pubDate>Fri, 06 Feb 2015 19:53:42 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/trades/how-to-follow-trades/</guid>
+      <description>Most of my research is around PCA methods on the yield curve or implied probability trading in markets with liquid options (which &amp;hellip; due to liquidity has still been focused on the yield curve). I primarily do Eurodollar &amp;ndash; GE at CME &amp;ndash; spread trading.
+I&amp;rsquo;ll only post up opening trades from now on (not retroactively) so hopefully after a few months it will be generally reflective of my portfolio. There&amp;rsquo;s really no purpose to this site other than to keep myself honest and to improve the methods I use to place trades.</description>
+    </item>
+    
+  </channel>
+</rss>

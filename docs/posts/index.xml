@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Jared Vacanti&#39;s Homepage</title>
+    <link>https://jaredvacanti.com/posts/</link>
+    <description>Recent content in Posts on Jared Vacanti&#39;s Homepage</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 05 Nov 2016 19:57:40 +0530</lastBuildDate>
+    
+	<atom:link href="https://jaredvacanti.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What&#39;s a local volatility model?</title>
+      <link>https://jaredvacanti.com/posts/volatility-models/</link>
+      <pubDate>Sat, 05 Nov 2016 19:57:40 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/volatility-models/</guid>
+      <description>&lt;p&gt;What other volatility models are there?&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The International Fisher Effect</title>
+      <link>https://jaredvacanti.com/posts/international-fisher-effect/</link>
+      <pubDate>Sat, 05 Nov 2016 18:25:22 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/international-fisher-effect/</guid>
+      <description>&lt;p&gt;I&amp;rsquo;m going to look at how expectations of inflation impact currency movements - or at least expected currency movements.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Wow - Bitcoin is now worth a lot</title>
+      <link>https://jaredvacanti.com/posts/bitcoin/</link>
+      <pubDate>Fri, 01 Dec 2017 19:41:01 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/bitcoin/</guid>
+      <description>&lt;p&gt;Bitcoin crossed the $10,000 mark, and then a few hours later crossed the $9k mark, and then the $11k mark&amp;hellip; but I don&amp;rsquo;t think this volatility is bad.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Crude Oil Calendar Spreads</title>
+      <link>https://jaredvacanti.com/posts/crude-oil-calendars/</link>
+      <pubDate>Tue, 03 May 2016 19:44:32 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/crude-oil-calendars/</guid>
+      <description>&lt;p&gt;All financial futures have a &amp;lsquo;cost-of-carry&amp;rsquo;, a natural repercussion of the marketplace that eliminates (as-usual) risk-free profit.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>The D3.js Development Environment</title>
+      <link>https://jaredvacanti.com/posts/d3js-development-environment/</link>
+      <pubDate>Tue, 05 May 2015 19:50:47 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/d3js-development-environment/</guid>
+      <description>&lt;p&gt;Mike Bostock’s D3.js is the hot, new (2011) tool on the web. More and more people are deciding they want to work with data visualizations, either as a full-blown career or a side project once they reach candidacy&amp;hellip; or whatever. It definitely has some added benefits over using ggplot2, but the R packages still have way more resources to learn from.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Visualizing Oscar Sentiments with Twitter Data</title>
+      <link>https://jaredvacanti.com/posts/oscar-sentiments-with-twitter/</link>
+      <pubDate>Fri, 06 Feb 2015 19:53:42 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/oscar-sentiments-with-twitter/</guid>
+      <description>&lt;p&gt;Even though it&amp;rsquo;s already Thursday, sometimes these things are better late than never (4 days is too long&amp;ndash; I&amp;rsquo;m already focused on Oscars 2016). I crunched some data on the Oscars to see what people thought about the winners and how they reacted to the losers.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Low Vix = Low Creativity</title>
+      <link>https://jaredvacanti.com/posts/low-vol-trading/</link>
+      <pubDate>Sat, 05 Nov 2016 19:56:17 +0530</pubDate>
+      
+      <guid>https://jaredvacanti.com/posts/low-vol-trading/</guid>
+      <description>&lt;p&gt;It doesn&amp;rsquo;t matter how sophisticated of a model you use, when the VIX is trading at 9 &lt;em&gt;every model&lt;/em&gt; says the same thing. It will revert.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
