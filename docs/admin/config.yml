@@ -1,7 +1,9 @@
 backend:
   name: github
   repo: jaredvacanti/jared-dot-com
-
+  branch: master
+  site_domain: gifted-wilson-9b7144.netlify.com
+  
 media_folder: "static/img/uploads"
 public_folder: "/img/uploads"
 
