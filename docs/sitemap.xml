@@ -48,36 +48,31 @@
   </url>
   
   <url>
+    <loc>https://jaredvacanti.com/</loc>
+    <lastmod>2017-12-01T19:41:01+05:30</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://jaredvacanti.com/posts/</loc>
+    <lastmod>2017-12-01T19:41:01+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jaredvacanti.com/contact/</loc>
     <lastmod>2016-12-01T13:00:25+05:30</lastmod>
   </url>
   
   <url>
+    <loc>https://jaredvacanti.com/trades/</loc>
+    <lastmod>2015-02-06T19:53:42+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://jaredvacanti.com/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jaredvacanti.com/</loc>
-    <lastmod>2016-11-05T19:57:40+05:30</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jaredvacanti.com/posts/</loc>
-    <lastmod>2016-11-05T19:57:40+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://jaredvacanti.com/tags/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://jaredvacanti.com/trades/</loc>
-    <lastmod>2015-02-06T19:53:42+05:30</lastmod>
-    <priority>0</priority>
   </url>
   
 </urlset>
